@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        发布学习路线
+    </title>
+
+    <link rel="icon" type="image/x-ico" href="/static/images/magic_logo.ico">
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/simditor.css">
+    <link rel="stylesheet" href="/static/css/create_article.css">
+
+
+</head>
+
+<body>
+{# 动态提示框 #}
+<div class="alert alert-success" role="alert" id="update_article_success">
+</div>
+
+{#头部#}
+<div id="header">
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+        <div id="top_menu">
+            <div id="logo_name">
+                <div id="logo_img">
+                    <a href="{% url "major:index" %}">
+                        <img src="/static/images/top_logo.png" alt="">
+                    </a>
+                </div>
+
+            </div>
+            <div id="create_article_toptitle">
+                <span style="font-weight: bolder;font-size: 22px">发布学习路线</span>
+            </div>
+            <div id="div_create_article">
+                {% if content.status == 2 %}
+                    <button type="button" class="btn btn-primary btn-lg" id="update_article">
+                        更 新
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-default"
+                        id="create_draft_article" >存草稿
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+                            id="create_article">发 布
+                    </button>
+                {% endif %}
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div id="top_right">
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img
+                                    src={{ user.avatar }} alt="" style="width: 35px;height: 35px"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+{#                                <li><a href="#" style="font-size: 18px;font-weight: bold">{{user.username}}</a></li>#}
+{#                                <li role="separator" class="divider"></li>#}
+                                <li style="border-top-width: 0px"><a href="{% url "user:studying_list" %}" target="_blank"><img src="/static/images/book24*24.png" alt=""> &nbsp;我的学习​</a></li>
+                                <li style="border-top-width: 0px"><a href="{% url "user:profile_edit" %}" target="_blank"><img src="/static/images/data16*16.png" alt="" style="height: 18px;width: 18px"> &nbsp;数据中心</a></li>
+                                <li style="border-top-width: 0px"><a href="{% url "user:account_settings" %}" target="_blank"><img src="/static/images/user16*16.png" alt="" style="height: 18px;width: 18px"> &nbsp;个人资料​</a></li>
+                                <li style="border-bottom-width: 2px;border-top-width: 0px"><a href="{% url "user:logout" %}" ><img src="/static/images/logout16*16.png" alt="" style="height: 18px;width: 18px"> &nbsp;退出</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <a href="{% url "user:register" %}">注册/登录</a>
+                    {% endif %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+{#内容区域-定义格栅系统#}
+<div class="row" id="article-content">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div id="article-content_edit">
+            <div id="article-content_edit_form">
+                <form class="form-horizontal" method="post" action="" id="articleForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">所属学科</label>
+                        <div class="col-sm-5">
+                          <div class="dropdown" id="college">
+                                    <select id="dropdownMenu1">
+                                        <option value="none" selected disabled hidden>学院</option>
+                                        {#此处列表由ajax动态生成#}
+                                    </select>
+                                </div>
+
+                        </div>
+                        <div class="col-sm-5">
+                          <div class="dropdown" id="profesion">
+                                    <select id="dropdownMenu2">
+                                        <option value="none" selected disabled hidden>专业</option>
+                                        {#此处列表由ajax动态生成#}
+                                    </select>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">讲师姓名</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputPassword" placeholder="请输入讲师的真实姓名">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-2">
+        <div id="directory-box">
+            <div id="article-content_edit_directory">
+{#                <p style="font-size:20px"><b>目录</b></p>#}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{#底部#}
+<div id="footer" class="footer" data-testid="footer">
+    <div class="footer-container">
+        <div class="slogan" data-testid="slogan">
+            <span>&nbsp;最专业的学习路线开源社区</span>
+        </div>
+        <div class="links" data-testid="links">
+            <a href="/help/about" target="_blank" class="">关于我们</a>
+            <a href="/help" target="_blank" class="">反馈</a>
+            <a href="/about/security" target="_blank" class="">隐私条款</a>
+            <a href="/terms" target="_blank" class="">备案信息</a>
+            <span class="split"></span>
+            <a href="?language=zh-cn" target="_self" class="">English</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script src="/static/js/simditor/module.js"></script>
+<script src="/static/js/simditor/uploader.js"></script>
+<script src="/static/js/simditor/hotkeys.js"></script>
+<script src="/static/js/simditor/simditor.js"></script>
+{#内容自动保存js#}
+{#<script src="/static/js/simditor/simditor-autosave.js"></script>#}
+<script src="/static/js/create_article.js"></script>
+{#获取csrf-token#}
+<script>
+    $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+    })
+</script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="/static/js/base.js"></script>
