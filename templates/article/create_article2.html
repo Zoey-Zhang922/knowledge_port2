@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        发布学习路线
+        发布学习资源
     </title>
 
     <link rel="icon" type="image/x-ico" href="/static/images/magic_logo.ico">
@@ -39,24 +39,22 @@
 
             </div>
             <div id="create_article_toptitle">
-                <span style="font-weight: bolder;font-size: 22px">发布学习路线</span>
+                <span style="font-weight: bolder;font-size: 22px">发布学习资源</span>
             </div>
-            <div id="div_create_article">
-                {% if content.status == 2 %}
-                    <button type="button" class="btn btn-primary btn-lg" id="update_article">
-                        更 新
-                    </button>
-                {% else %}
-                    <button type="button" class="btn btn-default"
-                        id="create_draft_article" >存草稿
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
-                            id="create_article">发 布
-                    </button>
-                {% endif %}
-
-
-            </div>
+{#            <div id="div_create_article">#}
+{#                {% if content.status == 2 %}#}
+{#                    <button type="button" class="btn btn-primary btn-lg" id="update_article">#}
+{#                        更 新#}
+{#                    </button>#}
+{#                {% else %}#}
+{#                    <button type="button" class="btn btn-default"#}
+{#                        id="create_draft_article" >存草稿#}
+{#                    </button>#}
+{#                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"#}
+{#                            id="create_article">发 布#}
+{#                    </button>#}
+{#                {% endif %}#}
+{#            </div>#}
 
         </div>
     </div>
@@ -96,7 +94,7 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">所属学科</label>
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                           <div class="dropdown" id="college">
                                     <select id="dropdownMenu1">
                                         <option value="none" selected disabled hidden>学院</option>
@@ -105,19 +103,48 @@
                                 </div>
 
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                           <div class="dropdown" id="profesion">
                                     <select id="dropdownMenu2">
                                         <option value="none" selected disabled hidden>专业</option>
                                         {#此处列表由ajax动态生成#}
                                     </select>
-                                </div>
+                          </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">讲师姓名</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputPassword" placeholder="请输入讲师的真实姓名">
+                          <input type="text" class="form-control" id="teacher" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">资源渠道</label>
+                        <div class="col-sm-6">
+                            <div class="dropdown" id="sourcetype">
+                                <select id="dropdownMenu1">
+                                    <option value="none" selected >B站</option>
+                                    <option>网易公开课</option>
+                                    <option>中国大学MOOC</option>
+                                    <option>coursera</option>
+                                    <option>学校官网</option>
+                                    <option>学堂在线</option>
+                                    <option>爱课程</option>
+                                    <option>黑马程序员</option>
+                                    <option>百度网盘</option>
+                                    <option>腾讯课堂</option>
+                                    <option>喜马拉雅</option>
+                                    <option>臺大開放式課程</option>
+                                    <option>YouTube</option>
+                                    <option>其它</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">资源链接</label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" id="sourceurl" rows="3"></textarea>
                         </div>
                     </div>
                 </form>
